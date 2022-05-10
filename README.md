@@ -1,0 +1,2 @@
+# NASA_TRMM_3B42_Dataset_Processing-Visualization
+在作者本学期大数据课学习，选取NASA官网的TRMM_3B42数据集下载并进行了相应的处理。在之间看到NASA的readme说明，其中有利用basemap库把hdf降雨数据可视化成图片的程序，并进行了一定的改进和利用一些列生成单点图片制成GIF格式。
