@@ -14,26 +14,25 @@ from pyhdf.SD import SD, SDC
 import datetime as dt
 from datetime import datetime
 
-begin = dt.date(2014,7,2)  #只算起始日期20140702
+begin = dt.date(2014,7,2)  
 length=287
-d=begin
 date=[]
 delta=dt.timedelta(days=1)
 fr='D:/TRMM/3B42.{0}.{1}.7.HDF'
-hr=['00','03','06','09','12','15','18','21']
+hour=['00','03','06','09','12','15','18','21']
 theLats = np.arange(-49.875,50,0.25)
 theLons = np.arange(-179.875,180,0.25)
-fig = plt.figure(dpi=300)
+fig = plt.figure(dpi=300)   #分辨率设为默认300比较合适
 latcorners = ([-50,50])
 loncorners = ([-180,180])
 
-for _ in range(length):
+for i in range(length):
     date.append(begin.strftime("%Y%m%d"))
     begin += delta
 
 for day in date:
-    for il in hr:
-        fr1=fr.format(day,il)
+    for hr in hour:
+        fr1=fr.format(day,hr)
         dataset = SD(fr1, SDC.READ)
         precip = dataset.select('precipitation')
         precip = precip[:]
@@ -58,7 +57,7 @@ for day in date:
         meridians = np.arange(-180.,180.,60.)
         m.drawmeridians(meridians,labels=[False,False,False,True])
         # Set the title and fonts
-        titletext='{0} {1} UTC Rain Rate'.format(day, il)
+        titletext='{0} {1} UTC Rain Rate'.format(day, hr)
         plt.title(titletext)
         font = {'family' : 'normal', 'weight' : 'bold', 'size' : 6}
         plt.rc('font', **font)
@@ -66,6 +65,6 @@ for day in date:
         cbar = m.colorbar(cs,location='right',pad="5%")
         cbar.set_label('mm/h')
         
-        savepath='D:/TRMM/pictures/{0}_{1}.png'.format(day,il)
+        savepath='D:/TRMM/pictures/{0}_{1}.png'.format(day,hr)
         plt.savefig(savepath,dpi=300)
 print("end")
